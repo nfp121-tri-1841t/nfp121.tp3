@@ -60,22 +60,28 @@ public class Pile4 implements PileI, Cloneable {
 
 	public void empiler(Object o) throws PilePleineException {
 		if (estPleine())
-			throw new PilePleineException();
+            throw new PilePleineException();
+        stk = new Maillon (o,stk);     
+        this.nombre++;
 		// à compléter
 	}
 
 	public Object depiler() throws PileVideException {
 		if (estVide())
-			throw new PileVideException();
-		// à compléter
-		return null;
+            throw new PileVideException();
+        Maillon m = this.stk;
+        this.stk = this.stk.suivant;
+        nombre--;
+        return m.element;
+
 	}
 
 	public Object sommet() throws PileVideException {
 		if (estVide())
-			throw new PileVideException();
-		return null; // à compléter
-	}
+            throw new PileVideException();
+        return stk.element ;
+    }
+
 
 	/**
 	 * Effectue un test de l'état de la pile.
@@ -83,8 +89,10 @@ public class Pile4 implements PileI, Cloneable {
 	 * @return vrai si la pile est vide, faux autrement
 	 */
 	public boolean estVide() {
-		return false; // à compléter
-	}
+        return stk == null; 
+    }
+ // à compléter
+	
 
 	/**
 	 * Effectue un test de l'état de la pile.
@@ -92,7 +100,8 @@ public class Pile4 implements PileI, Cloneable {
 	 * @return vrai si la pile est pleine, faux autrement
 	 */
 	public boolean estPleine() {
-		return false; // à compléter
+		return this.taille() >= capacite; 
+ // à compléter
 	}
 
 	/**
@@ -105,16 +114,49 @@ public class Pile4 implements PileI, Cloneable {
 
 		String s = "[";
 		// à compléter
+		 Maillon m = stk;
+        while (m != null){
+            s = s + m.element() ;
+            m = m.suivant();
+            if (m !=null) {s = s + ", ";}  
+        }  
+
 		return s + "]";
 	}
 
 	public boolean equals(Object o) {
-		if (o instanceof Pile4) {
-			// à compléter
-			return false;
-		}
-		return false;
-	}
+		boolean b = true;
+        Pile4 p1;
+        if (o instanceof Pile4) {
+            p1 = (Pile4)o;
+            Maillon m1;
+            Maillon m2;
+            try{
+                if (p1.taille() == this.taille() && p1.capacite() == this.capacite()){
+                m1 = stk;
+                m2 = p1.stk;
+                    for (int i = this.nombre - 1; i >= 0; i--) {
+                        if(!(m1.element() == m2.element())){
+                            b = false;
+                        }
+                        m1 = m1.suivant();
+                        m2 = m2.suivant();
+                    }
+                }
+                else{
+                    b = false;
+                }
+            }catch (Exception e){
+                b = false;
+            }
+            
+        }else{
+            b = false;
+        }
+        return b;
+    }
+
+        
 
 	public int capacite() {
 		return this.capacite;

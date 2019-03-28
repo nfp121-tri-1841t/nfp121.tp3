@@ -11,11 +11,11 @@ public class UneUtilisation {
 		p1.empiler("polygone");
 		p1.empiler(new Integer(100));
 		System.out.println(" la pile p1 = " + p1); // Quel est le résultat ?
-
+                //la resultat est la pile p1 = [100, polygone, <5,100>]
 		p2.empiler(new Integer(1000));
 		p1.empiler(p2);
 		System.out.println(" la p1 = " + p1); // Quel est le résultat ?
-
+                  //la resultat est la p1 =  la p1 = [[1000]]
 		try {
 			p1.empiler(new PolygoneRegulier(4,100));
 			// ....
